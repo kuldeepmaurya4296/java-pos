@@ -1,0 +1,77 @@
+spring:
+  application:
+    name: pos-system
+
+  datasource:
+    url: ${DB_URL:jdbc:h2:file:./data/posdb;MODE=MySQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;DB_CLOSE_DELAY=-1}
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 600000
+      connection-timeout: 20000
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          batch_size: 25
+        order_inserts: true
+        order_updates: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:pos@example.com}
+    password: ${MAIL_PASSWORD:secret}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+  devtools:
+    livereload:
+      enabled: true
+
+server:
+  port: ${PORT:5000}
+
+razorpay:
+  api:
+    key: ${RAZORPAY_API_KEY:rzp_test_sample}
+    secret: ${RAZORPAY_API_SECRET:rzp_secret_sample}
+  callback:
+    base-url: ${FRONTEND_URL:http://localhost:5173}
+
+stripe:
+  api:
+    key: ${STRIPE_API_KEY:stripe_test_sample}
+
+gemini:
+  api:
+    key: ${GEMINI_API_KEY:}
+
+app:
+  frontend:
+    reset-url: ${FRONTEND_RESET_URL:http://localhost:5173/auth/reset-password?token=}
+
+logging:
+  level:
+    root: INFO
+    com.zosh: INFO
+    org.springframework.security: WARN
+    org.hibernate.SQL: ERROR
